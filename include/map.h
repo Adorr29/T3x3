@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2017
-** for_norme
+** T3x3
 ** File description:
 ** map.h
 */
@@ -20,7 +20,8 @@ typedef struct {
 	bool **tab;
 } map_t;
 
-map_t map_create(size_t size);
+map_t *map_create(size_t size);
+map_t *map_copy(map_t *map);
 void map_destroy(map_t *map);
 void map_aff(sfRenderWindow *window, map_t *map);
 void map_swaps(map_t *map, size_t x, size_t y);

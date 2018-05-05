@@ -7,7 +7,7 @@
 
 #include "map.h"
 
-sfColor get_color(bool tmp)
+static sfColor get_color(bool tmp)
 {
 	sfColor fill_color = {FILL_COLOR, 255};
 	sfColor empty_color = {EMPTY_COLOR, 255};

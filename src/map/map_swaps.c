@@ -7,7 +7,7 @@
 
 #include "prototype.h"
 
-void swap(bool *tmp)
+static void swap(bool *tmp)
 {
 	*tmp ? *tmp = false : (*tmp = true);
 }

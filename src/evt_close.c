@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2017
-** for_norme
+** T3x3
 ** File description:
 ** evt_close.c
 */
@@ -9,7 +9,8 @@
 
 void evt_close(sfEvent *event, sfRenderWindow *window)
 {
-	event->type == sfEvtClosed ? sfRenderWindow_close(window) : 0;
+	if (event->type == sfEvtClosed)
+		sfRenderWindow_close(window);
 	if (event->type == sfEvtKeyPressed)
 		if (sfKeyboard_isKeyPressed(sfKeyEscape))
 			sfRenderWindow_close(window);

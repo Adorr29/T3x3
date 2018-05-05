@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "map.h"
 
-void map_fill(map_t *map)
+static void map_fill(map_t *map)
 {
 	size_t nb = rand() % (map->size * map->size) + map->size * map->size;
 
@@ -17,21 +17,23 @@ void map_fill(map_t *map)
 	map_full(map) ? map_fill(map) : 0;
 }
 
-map_t map_create(size_t size)
+map_t *map_create(size_t size)
 {
-	map_t map = {.size = size};
-	map_t error = {.size = 0};
+	map_t *map = malloc(sizeof(map_t));
 
-	map.tab = malloc(sizeof(bool *) * size);
-	if (map.tab == NULL)
-		return (error);
-	for (size_t i = 0; i < map.size; i++) {
-		map.tab[i] = malloc(sizeof(bool) * size);
-		if (map.tab[i] == NULL)
-			return (error);
-		for (size_t j = 0; j < map.size; j++)
-			map.tab[i][j] = true;
+	if (map == NULL)
+		return (NULL);
+	map->size = size;
+	map->tab = malloc(sizeof(bool *) * size);
+	if (map->tab == NULL)
+		return (NULL);
+	for (size_t i = 0; i < map->size; i++) {
+		map->tab[i] = malloc(sizeof(bool) * size);
+		if (map->tab[i] == NULL)
+			return (NULL);
+		for (size_t j = 0; j < map->size; j++)
+			map->tab[i][j] = true;
 	}
-	map_fill(&map);
+	map_fill(map);
 	return (map);
 }

@@ -1,6 +1,6 @@
 ##
 ## EPITECH PROJECT, 2017
-## for_norme
+## T3x3
 ## File description:
 ## Makefile
 ##
@@ -16,8 +16,10 @@ SRC	=	$(SRCDIR)main.c \
 		$(SRCDIR)menu.c \
 		$(SRCDIR)game.c \
 		$(SRCDIR)play.c \
+		$(SRCDIR)ia.c \
 		$(SRCDIR)evt_close.c \
 		$(MAPDIR)map_create.c \
+		$(MAPDIR)map_copy.c \
 		$(MAPDIR)map_destroy.c \
 		$(MAPDIR)map_aff.c \
 		$(MAPDIR)map_swaps.c \

@@ -13,4 +13,5 @@ void map_destroy(map_t *map)
 	for (size_t i = 0; i < map->size; i++)
 		free(map->tab[i]);
 	free(map->tab);
+	free(map);
 }

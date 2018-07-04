@@ -24,23 +24,29 @@ SRC	=	$(SRCDIR)main.c \
 		$(MAPDIR)map_aff.c \
 		$(MAPDIR)map_swaps.c \
 		$(MAPDIR)map_full.c \
+		$(MAPDIR)map_clean.c \
+		$(MAPDIR)map_rand.c \
 
 OBJ	=	$(SRC:.c=.o)
 
 CFLAGS	+=	-I./include
 CFLAGS	+=	-W -Wall -Wextra
+CFLAGS	+=	-O3
 
 LDFLAGS	+=	-l c_graph_prog
 
 all	:	$(NAME)
 
 $(NAME)	:	$(OBJ)
-		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
+		@$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean	:
-		rm -f $(OBJ)
+		@rm -f $(OBJ)
 
 fclean	:	clean
-		rm -f $(NAME)
+		@rm -f $(NAME)
 
 re	:	fclean all
+
+debug	:	CFLAGS += -g3
+debug	:	re

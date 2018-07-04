@@ -24,6 +24,7 @@ int menu(size_t size)
 		map = map_create(size);
 		if (map == NULL)
 			return (84);
+		map_rand(map);
 		game_output = game(window, map);
 		map_destroy(map);
 		size++;

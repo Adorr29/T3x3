@@ -5,6 +5,7 @@
 ** play.c
 */
 
+#include <stdlib.h>
 #include "prototype.h"
 
 static void player(sfVector2i mouse_pos, sfRenderWindow *window, map_t *map)
@@ -24,11 +25,19 @@ static void player(sfVector2i mouse_pos, sfRenderWindow *window, map_t *map)
 
 static void help(map_t *map)
 {
-	sfVector2i pos = ia(map);
+	if (map->help.x < 0 || map->help.y < 0) {
+		size_t nb = 0;
+		sfVector2i tmp[map->size * map->size];
 
-	if (pos.x < 0 || pos.y < 0)
-		return;
-	map_swaps(map, pos.x, pos.y);
+		for (size_t i = 0; i < map->size; i++)
+			for (size_t j = 0; j < map->size; j++)
+				if (map->solve[i][j])
+					tmp[nb++] = (sfVector2i){i, j};
+		map->help = tmp[rand() % nb];
+		//map->help = ia(map);
+	}
+	else
+		map_swaps(map, map->help.x, map->help.y);
 }
 
 bool play(sfEvent *event, sfRenderWindow *window, map_t *map)

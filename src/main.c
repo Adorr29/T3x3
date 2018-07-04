@@ -10,6 +10,14 @@
 #include <time.h>
 #include "prototype.h"
 
+static bool is_number(char *str)
+{
+	for (size_t i = 0; str[i] != '\0'; i++)
+		if (str[i] < '0' || str[i] > '9')
+			return (false);
+	return (true);
+}
+
 int main(int nb_arg, char **arg_tab)
 {
 	size_t size = 3;
@@ -19,11 +27,10 @@ int main(int nb_arg, char **arg_tab)
 		return (84);
 	}
 	if (nb_arg == 2) {
-		for (size_t i = 0; arg_tab[1][i] != '\0'; i++)
-			if (arg_tab[1][i] < '0' || arg_tab[1][i] > '9') {
-				fprintf(stderr, "\"%s\" is not a number\n", arg_tab[1]);
-				return (84);
-			}
+		if (is_number(arg_tab[1]) == false) {
+			fprintf(stderr, "\"%s\" is not a number\n", arg_tab[1]);
+			return (84);
+		}
 		size = atoi(arg_tab[1]);
 	}
 	if (size == 0) {

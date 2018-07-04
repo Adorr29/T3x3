@@ -8,13 +8,21 @@
 #include <stdlib.h>
 #include "map.h"
 
-static void map_fill(map_t *map)
+static bool **malloc_2b(size_t size, bool fill)
 {
-	size_t nb = rand() % (map->size * map->size) + map->size * map->size;
+	bool **tab;
 
-	for (size_t n = 0; n < nb; n++)
-		map_swaps(map, rand() % map->size, rand() % map->size);
-	map_full(map) ? map_fill(map) : 0;
+	tab = malloc(sizeof(bool *) * size);
+	if (tab == NULL)
+		return (NULL);
+	for (size_t i = 0; i < size; i++) {
+		tab[i] = malloc(sizeof(bool) * size);
+		if (tab[i] == NULL)
+			return (NULL);
+		for (size_t j = 0; j < size; j++)
+			tab[i][j] = fill;
+	}
+	return (tab);
 }
 
 map_t *map_create(size_t size)
@@ -24,16 +32,8 @@ map_t *map_create(size_t size)
 	if (map == NULL)
 		return (NULL);
 	map->size = size;
-	map->tab = malloc(sizeof(bool *) * size);
-	if (map->tab == NULL)
-		return (NULL);
-	for (size_t i = 0; i < map->size; i++) {
-		map->tab[i] = malloc(sizeof(bool) * size);
-		if (map->tab[i] == NULL)
-			return (NULL);
-		for (size_t j = 0; j < map->size; j++)
-			map->tab[i][j] = true;
-	}
-	map_fill(map);
+	map->tab = malloc_2b(map->size, true);
+	map->solve = malloc_2b(map->size, false);
+	map->help = (sfVector2i){-1, -1};
 	return (map);
 }

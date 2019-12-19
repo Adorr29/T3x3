@@ -1,52 +1,45 @@
 ##
-## EPITECH PROJECT, 2017
-## T3x3
+## EPITECH PROJECT, 2018
+## for_norme
 ## File description:
 ## Makefile
 ##
 
-NAME	=	T3x3
+NAME		=	T3x3
 
-CC	=	gcc
+CC		=	g++
 
-SRCDIR	=	src/
-MAPDIR	=	$(SRCDIR)map/
+SRCDIR		=	Src/
+INCDIR		=	Include/
 
-SRC	=	$(SRCDIR)main.c \
-		$(SRCDIR)menu.c \
-		$(SRCDIR)game.c \
-		$(SRCDIR)play.c \
-		$(SRCDIR)ia.c \
-		$(SRCDIR)evt_close.c \
-		$(MAPDIR)map_create.c \
-		$(MAPDIR)map_copy.c \
-		$(MAPDIR)map_destroy.c \
-		$(MAPDIR)map_aff.c \
-		$(MAPDIR)map_swaps.c \
-		$(MAPDIR)map_full.c \
-		$(MAPDIR)map_clean.c \
-		$(MAPDIR)map_rand.c \
+SRC		=	$(SRCDIR)Main.cpp \
+			$(SRCDIR)World.cpp \
+			$(SRCDIR)Error.cpp \
 
-OBJ	=	$(SRC:.c=.o)
+OBJ		=	$(SRC:.cpp=.o)
 
-CFLAGS	+=	-I./include
-CFLAGS	+=	-W -Wall -Wextra
-CFLAGS	+=	-O3
+CXXFLAGS	+=	-I $(INCDIR)
+CXXFLAGS	+=	-W -Wall -Wextra
 
-LDFLAGS	+=	-l c_graph_prog
+LDFLAGS		+=	-l sfml-system
+LDFLAGS		+=	-l sfml-window
+LDFLAGS		+=	-l sfml-graphics
 
-all	:	$(NAME)
+%.o		:	%.cpp
+			@$(CC) -c -o $@ $< $(CXXFLAGS)
 
-$(NAME)	:	$(OBJ)
-		@$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
+all		:	$(NAME)
 
-clean	:
-		@rm -f $(OBJ)
+$(NAME)		:	$(OBJ)
+			@$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
-fclean	:	clean
-		@rm -f $(NAME)
+clean		:
+			@rm -f $(OBJ)
 
-re	:	fclean all
+fclean		:	clean
+			@rm -f $(NAME)
 
-debug	:	CFLAGS += -g3
-debug	:	re
+re		:	fclean all
+
+debug		:	CXXFLAGS += -g3
+debug		:	re

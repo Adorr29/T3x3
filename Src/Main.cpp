@@ -16,7 +16,7 @@ int main()
 {
     RenderWindow window(VideoMode(900, 900), "T3x3", Style::Close);
     World world(3);
-    World win(3);
+    World win(world.getSize());
 
     world.generate();
     win.fill();
@@ -27,10 +27,12 @@ int main()
                 window.close();
             else if (event.type == Event::MouseButtonPressed) {
                 if (event.mouseButton.button == Mouse::Left) {
-                    world.swap(Vector2u(event.mouseButton.x / 300, event.mouseButton.y / 300));
+                    world.swap(Vector2u(event.mouseButton.x / (window.getSize().x / world.getSize().x), event.mouseButton.y / (window.getSize().y / world.getSize().y)));
                     if (world == win)
                         window.close();
                 }
+                else
+                    world.save("save");
             }
         }
         window.clear();

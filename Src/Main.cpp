@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "World.hpp"
+#include "Board.hpp"
 
 using namespace std;
 using namespace sf;
@@ -15,10 +15,10 @@ using namespace sf;
 int main()
 {
     RenderWindow window(VideoMode(900, 900), "T3x3", Style::Close);
-    World world(3);
-    World win(world.getSize());
+    Board board(3);
+    Board win(board.getSize());
 
-    world.generate();
+    board.generate();
     win.fill();
     window.setFramerateLimit(30);
     while (window.isOpen()) {
@@ -27,16 +27,16 @@ int main()
                 window.close();
             else if (event.type == Event::MouseButtonPressed) {
                 if (event.mouseButton.button == Mouse::Left) {
-                    world.swap(Vector2u(event.mouseButton.x / (window.getSize().x / world.getSize().x), event.mouseButton.y / (window.getSize().y / world.getSize().y)));
-                    if (world == win)
+                    board.swap(Vector2u(event.mouseButton.x / (window.getSize().x / board.getSize().x), event.mouseButton.y / (window.getSize().y / board.getSize().y)));
+                    if (board == win)
                         window.close();
                 }
                 else
-                    world.save("save");
+                    board.save("save");
             }
         }
         window.clear();
-        world.aff(window);
+        board.aff(window);
         window.display();
     }
     return 0;

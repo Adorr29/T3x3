@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2019
 ** T3x3
 ** File description:
-** World.hpp
+** Board.hpp
 */
 
 #pragma once
@@ -15,14 +15,14 @@ using namespace sf;
 #define CrossSwapPartten vector<Vector2i>({{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}})
 #define SquareSwapPartten vector<Vector2i>({{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}})
 
-class World // name ?
+class Board // name ?
 {
 public:
-    World(const Uint32 &_size);
-    World(const Vector2u &_size);
-    World(const string &fileName);
-    World(const World &world);
-    ~World();
+    Board(const Uint32 &_size);
+    Board(const Vector2u &_size);
+    Board(const string &fileName);
+    Board(const Board &board);
+    ~Board();
     const Vector2u &getSize() const;
     const bool *const *getTab() const; // ?
     void setSwapPattern(const vector<Vector2i> &_swapPattern);
@@ -33,7 +33,7 @@ public:
     void aff(RenderTarget &window, FloatRect affZone = FloatRect(0, 0, 0, 0));
     bool save(const string &fileName) const; // return bool or throw ?
     bool load(const string &fileName); // return bool or throw ?
-    bool operator==(const World &other);
+    bool operator==(const Board &other);
 
 private:
     void create(const Vector2u &_size);

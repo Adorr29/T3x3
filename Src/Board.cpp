@@ -2,72 +2,72 @@
 ** EPITECH PROJECT, 2019
 ** T3x3
 ** File description:
-** World.cpp
+** Board.cpp
 */
 
 #include <iostream>
 #include <fstream>
-#include "World.hpp"
+#include "Board.hpp"
 #include "Error.hpp"
 
-World::World(const Uint32 &_size)
-    : World(Vector2u(_size, _size))
+Board::Board(const Uint32 &_size)
+    : Board(Vector2u(_size, _size))
 {
 }
 
-World::World(const Vector2u &_size)
+Board::Board(const Vector2u &_size)
     : color({Color(50, 50, 50), Color(250, 160, 0)}),
       swapPattern(CrossSwapPartten)
 {
     create(_size);
 }
 
-World::World(const string &fileName)
+Board::Board(const string &fileName)
 {
     if (!load(fileName))
         throw ERROR("Load failed");
 }
 
-World::World(const World &world)
-    : World(Vector2u(world.size.x, world.size.y))
+Board::Board(const Board &board)
+    : Board(Vector2u(board.size.x, board.size.y))
 {
     for (Uint32 i = 0; i < size.x; i++)
         for (Uint32 j = 0; j < size.y; j++)
-            tab[i][j] = world.tab[i][j];
-    color = world.color;
-    swapPattern = world.swapPattern;
+            tab[i][j] = board.tab[i][j];
+    color = board.color;
+    swapPattern = board.swapPattern;
 }
 
-World::~World()
+Board::~Board()
 {
     for (Uint32 i = 0; i < size.x; i++)
         delete [] tab[i];
     delete [] tab;
 }
 
-const Vector2u &World::getSize() const
+const Vector2u &Board::getSize() const
 {
     return size;
 }
 
-const bool *const *World::getTab() const
+const bool *const *Board::getTab() const
 {
     return tab;
 }
 
-void World::setSwapPattern(const vector<Vector2i> &_swapPattern)
+void Board::setSwapPattern(const vector<Vector2i> &_swapPattern)
 {
     swapPattern = _swapPattern;
 }
 
-void World::fill(const bool &state)
+void Board::fill(const bool &state)
 {
     for (Uint32 i = 0; i < size.x; i++)
         for (Uint32 j = 0; j < size.y; j++)
             tab[i][j] = state;
 }
 
-void World::generate(const Uint32 &seed)
+void Board::generate(const Uint32 &seed)
 {
     fill();
     srand(seed);
@@ -77,7 +77,7 @@ void World::generate(const Uint32 &seed)
                 swap(Vector2u(i, j));
 }
 
-void World::randomSwap(const size_t &nbSwap, const Uint32 &seed)
+void Board::randomSwap(const size_t &nbSwap, const Uint32 &seed)
 {
     vector<Vector2u> caseList(size.x * size.y);
     size_t n = 0;
@@ -94,7 +94,7 @@ void World::randomSwap(const size_t &nbSwap, const Uint32 &seed)
     }
 }
 
-void World::swap(const Vector2u &position)
+void Board::swap(const Vector2u &position)
 {
     for (const Vector2i &one : swapPattern) {
         const Vector2u toSwap(position.x + one.x, position.y + one.y);
@@ -104,7 +104,7 @@ void World::swap(const Vector2u &position)
     }
 }
 
-void World::aff(RenderTarget &window, FloatRect affZone)
+void Board::aff(RenderTarget &window, FloatRect affZone)
 {
     if (affZone == FloatRect(0, 0, 0, 0))
         affZone = FloatRect(Vector2f(0, 0), Vector2f(window.getSize()));
@@ -121,7 +121,7 @@ void World::aff(RenderTarget &window, FloatRect affZone)
         }
 }
 
-bool World::save(const string &fileName) const
+bool Board::save(const string &fileName) const
 {
     try {
         ofstream file(fileName, ifstream::binary | ifstream::trunc);
@@ -154,7 +154,7 @@ bool World::save(const string &fileName) const
     return true;
 }
 
-bool World::load(const string &fileName)
+bool Board::load(const string &fileName)
 {
     try {
         ifstream file(fileName, ifstream::binary);
@@ -193,7 +193,7 @@ bool World::load(const string &fileName)
     return true;
 }
 
-void World::create(const Vector2u &_size)
+void Board::create(const Vector2u &_size)
 {
     size = _size;
     tab = new bool* [size.x];
@@ -201,7 +201,7 @@ void World::create(const Vector2u &_size)
         tab[i] = new bool [size.y];
 }
 
-bool World::operator==(const World &other)
+bool Board::operator==(const Board &other)
 {
     if (size != other.size)
         return false;

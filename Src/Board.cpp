@@ -10,14 +10,19 @@
 #include "Board.hpp"
 #include "Error.hpp"
 
+Board::Board()
+    : color({Color(50, 50, 50), Color(250, 160, 0)}),
+      swapPattern(CrossSwapPartten)
+{
+}
+
 Board::Board(const Uint32 &_size)
     : Board(Vector2u(_size, _size))
 {
 }
 
 Board::Board(const Vector2u &_size)
-    : color({Color(50, 50, 50), Color(250, 160, 0)}),
-      swapPattern(CrossSwapPartten)
+    : Board()
 {
     create(_size);
 }
@@ -121,6 +126,14 @@ void Board::aff(RenderTarget &window, FloatRect affZone)
         }
 }
 
+void Board::create(const Vector2u &_size)
+{
+    size = _size;
+    tab = new bool* [size.x];
+    for (Uint32 i = 0; i < size.x; i++)
+        tab[i] = new bool [size.y];
+}
+
 bool Board::save(const string &fileName) const
 {
     try {
@@ -193,14 +206,6 @@ bool Board::load(const string &fileName)
     return true;
 }
 
-void Board::create(const Vector2u &_size)
-{
-    size = _size;
-    tab = new bool* [size.x];
-    for (Uint32 i = 0; i < size.x; i++)
-        tab[i] = new bool [size.y];
-}
-
 bool Board::operator==(const Board &other)
 {
     if (size != other.size)
@@ -210,4 +215,9 @@ bool Board::operator==(const Board &other)
             if (tab[i][j] != other.tab[i][j])
                 return false;
     return true;
+}
+
+bool Board::operator!=(const Board &other)
+{
+    return !operator==(other);
 }

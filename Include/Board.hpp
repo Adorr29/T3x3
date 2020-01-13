@@ -12,8 +12,10 @@
 using namespace std;
 using namespace sf;
 
-#define CrossSwapPartten vector<Vector2i>({{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}})
-#define SquareSwapPartten vector<Vector2i>({{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}})
+typedef vector<Vector2i> SwapPattern;
+
+#define CrossSwapPartten {{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}}
+#define SquareSwapPartten {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}}
 
 class Board
 {
@@ -26,21 +28,26 @@ public:
     ~Board();
     const Vector2u &getSize() const;
     const bool *const *getTab() const; // ?
-    void setSwapPattern(const vector<Vector2i> &_swapPattern);
+    const array<Color, 2> &getColor() const;
+    const SwapPattern &getSwapPattern() const;
+    void setColor(const array<Color, 2> &_color);
+    void setSwapPattern(const SwapPattern &_swapPattern);
     void fill(const bool &state = true);
     void generate(const Uint32 &seed = time(nullptr)); // can generate a fill board !!
     void randomSwap(const size_t &nbSwap, const Uint32 &seed = time(nullptr));
     void swap(const Vector2u &position);
-    void aff(RenderTarget &window, FloatRect affZone = FloatRect(0, 0, 0, 0));
+    void aff(RenderTarget &window, FloatRect affZone = FloatRect(0, 0, 0, 0)) const;
     void create(const Vector2u &_size);
+    void resize(const Vector2i &back, const Vector2i &front);
     bool save(const string &fileName) const; // return bool or throw ?
     bool load(const string &fileName); // return bool or throw ?
-    bool operator==(const Board &other);
-    bool operator!=(const Board &other);
+    void operator=(const Board &other);
+    bool operator==(const Board &other) const;
+    bool operator!=(const Board &other) const;
 
 private:
     Vector2u size;
     bool **tab;
-    array<Color, 2> color; // TODO add setter // use texture ?
-    vector<Vector2i> swapPattern;
+    array<Color, 2> color; // use texture ?
+    SwapPattern swapPattern;
 };

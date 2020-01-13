@@ -34,13 +34,8 @@ Board::Board(const string &fileName)
 }
 
 Board::Board(const Board &board)
-    : Board(Vector2u(board.size.x, board.size.y))
 {
-    for (Uint32 i = 0; i < size.x; i++)
-        for (Uint32 j = 0; j < size.y; j++)
-            tab[i][j] = board.tab[i][j];
-    color = board.color;
-    swapPattern = board.swapPattern;
+    operator=(board);
 }
 
 Board::~Board()
@@ -60,7 +55,22 @@ const bool *const *Board::getTab() const
     return tab;
 }
 
-void Board::setSwapPattern(const vector<Vector2i> &_swapPattern)
+const array<Color, 2> &Board::getColor() const
+{
+    return color;
+}
+
+const SwapPattern &Board::getSwapPattern() const
+{
+    return swapPattern;
+}
+
+void Board::setColor(const array<Color, 2> &_color)
+{
+    color = _color;
+}
+
+void Board::setSwapPattern(const SwapPattern &_swapPattern)
 {
     swapPattern = _swapPattern;
 }
@@ -109,11 +119,11 @@ void Board::swap(const Vector2u &position)
     }
 }
 
-void Board::aff(RenderTarget &window, FloatRect affZone)
+void Board::aff(RenderTarget &window, FloatRect affZone) const
 {
     if (affZone == FloatRect(0, 0, 0, 0))
         affZone = FloatRect(Vector2f(0, 0), Vector2f(window.getSize()));
-    const Vector2f rectSize(affZone.width / size.x, affZone.height / size.y);
+    const Vector2f rectSize(affZone.width / (float)size.x, affZone.height / (float)size.y);
     RectangleShape rectangle;
 
     rectangle.setSize(rectSize * (float)0.97);
@@ -121,7 +131,7 @@ void Board::aff(RenderTarget &window, FloatRect affZone)
     for (Uint32 i = 0; i < size.x; i++)
         for (Uint32 j = 0; j < size.y; j++) {
             rectangle.setFillColor(color[tab[i][j]]);
-            rectangle.setPosition((i + 0.5) * rectSize.x, (j + 0.5) * rectSize.y);
+            rectangle.setPosition((i + 0.5) * rectSize.x + affZone.left, (j + 0.5) * rectSize.y + affZone.top);
             window.draw(rectangle);
         }
 }
@@ -132,6 +142,29 @@ void Board::create(const Vector2u &_size)
     tab = new bool* [size.x];
     for (Uint32 i = 0; i < size.x; i++)
         tab[i] = new bool [size.y];
+}
+
+void Board::resize(const Vector2i &back, const Vector2i &front)
+{
+    bool **newTab;
+    Vector2u newSize(size.x + back.x + front.x, size.y + back.y + front.y);
+
+    if (newSize.x < 1 || newSize.y < 1)
+        return;
+    newTab = new bool* [newSize.x];
+    for (Uint32 i = 0; i < newSize.x; i++) {
+        newTab[i] = new bool [newSize.y];
+        for (Uint32 j = 0; j < newSize.y; j++)
+            newTab[i][j] = false;
+    }
+    for (Uint32 i = max(0, -back.x); i < min(size.x, size.x + front.x); i++)
+        for (Uint32 j = max(0, -back.y); j < min(size.y, size.y + front.y); j++)
+            newTab[i + back.x][j + back.y] = tab[i][j];
+    for (Uint32 i = 0; i < size.x; i++)
+        delete [] tab[i];
+    delete [] tab;
+    tab = newTab;
+    size = newSize;
 }
 
 bool Board::save(const string &fileName) const
@@ -177,17 +210,13 @@ bool Board::load(const string &fileName)
             throw ERROR("File " + fileName + " cannot be opened");
         if (!file.read((char*)&size, sizeof(Vector2u)))
             throw ERROR("Read size failed");
-        cerr << "size : " << size.x << " " << size.y << endl;
         create(size);
         data.resize(size.x * size.y / 8 + (size.x * size.y % 8 ? 1 : 0));
         if (!file.read((char*)data.data(), sizeof(char) * data.size()))
             throw ERROR("Read data failed");
         for (Uint32 i = 0; i < size.x; i++)
-            for (Uint32 j = 0; j < size.y; j++) {
-                cerr << "X : " << (data[(i * size.x + j) / 8] & (0b1 << (i * size.x + j) % 8)) << endl;
+            for (Uint32 j = 0; j < size.y; j++)
                 tab[i][j] = (data[(i * size.x + j) / 8] & (0b1 << (i * size.x + j) % 8)) ? true : false;
-                cerr << "tab[" << i << "][" << j << "] : " << (tab[i][j] ? "true" : "false") << endl;
-            }
         if (!file.read((char*)&color, sizeof(Color) * 2))
             throw ERROR("Read color failed");
         Uint16 swapPatternSize;
@@ -206,7 +235,17 @@ bool Board::load(const string &fileName)
     return true;
 }
 
-bool Board::operator==(const Board &other)
+void Board::operator=(const Board &other)
+{
+    create(other.size);
+    for (Uint32 i = 0; i < size.x; i++)
+        for (Uint32 j = 0; j < size.y; j++)
+            tab[i][j] = other.tab[i][j];
+    color = other.color;
+    swapPattern = other.swapPattern;
+}
+
+bool Board::operator==(const Board &other) const
 {
     if (size != other.size)
         return false;
@@ -217,7 +256,7 @@ bool Board::operator==(const Board &other)
     return true;
 }
 
-bool Board::operator!=(const Board &other)
+bool Board::operator!=(const Board &other) const
 {
     return !operator==(other);
 }

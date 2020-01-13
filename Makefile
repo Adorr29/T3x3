@@ -18,7 +18,9 @@ SRC		=	$(SRCDIR)Main.cpp \
 			$(SRCDIR)Error.cpp \
 			$(SRCDIR)Board.cpp \
 			$(GAMDIR)Game.cpp \
-			$(GAMDIR)GameFillBoard.cpp \
+			$(GAMDIR)GameClassic.cpp \
+			$(GAMDIR)GameChallenge.cpp \
+			$(GAMDIR)GameEditor.cpp \
 			$(UTYDIR)Globpp.cpp \
 			$(UTYDIR)Split.cpp \
 

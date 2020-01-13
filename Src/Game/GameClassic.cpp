@@ -2,12 +2,12 @@
 ** EPITECH PROJECT, 2019
 ** T3x3
 ** File description:
-** GameFillBoard.cpp
+** GameClassic.cpp
 */
 
-#include "Game/GameFillBoard.hpp"
+#include "Game/GameClassic.hpp"
 
-GameFillBoard::GameFillBoard(RenderWindow &_window, const Uint32 &size)
+GameClassic::GameClassic(RenderWindow &_window, const Uint32 &size)
     : Game(_window)
 {
     board.create(Vector2u(size, size));
@@ -17,9 +17,9 @@ GameFillBoard::GameFillBoard(RenderWindow &_window, const Uint32 &size)
     affZone = FloatRect(Vector2f(0, 0), Vector2f(window.getSize()));
 }
 
-void GameFillBoard::run()
+void GameClassic::run()
 {
-    while (window.isOpen()) {
+    while (window.isOpen() && !exit) {
         pollEvent();
         window.clear();
         board.aff(window, affZone);

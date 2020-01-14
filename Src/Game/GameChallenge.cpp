@@ -34,7 +34,7 @@ GameChallenge::GameChallenge(RenderWindow &_window, const size_t &_nbSwap, const
     text.setCharacterSize(window.getSize().y / 3.0);
     text.setPosition(window.getSize().x * 7 / 6.0, window.getSize().y * 5 / 6.0);
     refreshNbSwapLeft();
-    errorSound.openFromFile("Resources/Sound/Error.wav");
+    errorSound = SoundBox::getInstance().getSound("Error");
 }
 
 void GameChallenge::run()

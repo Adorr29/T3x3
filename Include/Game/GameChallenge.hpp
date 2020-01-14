@@ -33,5 +33,5 @@ private:
     size_t nbSwap;
     bool reset;
     vector<Vector2u> swapList;
-    Music errorSound; // TODO use Sound
+    Sound errorSound;
 };

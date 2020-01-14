@@ -17,6 +17,7 @@ INCDIR		=	Include/
 SRC		=	$(SRCDIR)Main.cpp \
 			$(SRCDIR)Error.cpp \
 			$(SRCDIR)Board.cpp \
+			$(SRCDIR)SoundBox.cpp \
 			$(GAMDIR)Game.cpp \
 			$(GAMDIR)GameClassic.cpp \
 			$(GAMDIR)GameChallenge.cpp \

@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2019
-** for_norme
+** T3x3
 ** File description:
 ** Error.hpp
 */

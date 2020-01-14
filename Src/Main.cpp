@@ -11,7 +11,6 @@
 #include "Game/GameChallenge.hpp"
 #include "Game/GameEditor.hpp"
 
-
 class Button
 {
 public:
@@ -95,7 +94,7 @@ void Button::textSetOrigin()
     text.setOrigin(text.getGlobalBounds().width / 2.0 + textPosDiff.x, text.getGlobalBounds().height / 2.0 + textPosDiff.y);
 }
 
-class Menu
+class Menu // rename MainMenu ?
 {
 public:
     Menu();
@@ -270,12 +269,6 @@ int main()
     Menu menu;
 
     menu.run();
-
-    /*//unique_ptr<Game> game = make_unique<GameEditor>(window);
-    unique_ptr<Game> game = make_unique<GameClassic>(window, 5);
-    //unique_ptr<Game> game = make_unique<GameChallenge>(window, 3);
-
-    game->run();*/
 
     return 0;
 }

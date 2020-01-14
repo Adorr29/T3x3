@@ -8,8 +8,8 @@
 #pragma once
 
 #include <functional>
-#include <SFML/Audio.hpp>
 #include "Board.hpp"
+#include "SoundBox.hpp"
 
 class Game
 {
@@ -31,7 +31,7 @@ protected:
     Board board;
     Board winBoard;
     FloatRect affZone;
-    Music winSound; // TODO use Sound
+    Sound winSound;
     function<void(const Vector2u&)> swapCallback;
     function<void(const Event&)> eventCallback;
 };

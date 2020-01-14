@@ -15,7 +15,7 @@ Game::Game(RenderWindow &_window)
 {
     swapCallback = [](const Vector2u&){};
     eventCallback = [](const Event&){};
-    winSound.openFromFile("Resources/Sound/Win.ogg");
+    winSound = SoundBox::getInstance().getSound("Win");
 }
 
 void Game::pollEvent()

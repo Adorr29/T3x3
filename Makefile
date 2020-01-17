@@ -10,7 +10,9 @@ NAME		=	T3x3
 CC		=	g++
 
 SRCDIR		=	Src/
-GAMDIR		=	$(SRCDIR)Game/
+GAMEDIR		=	$(SRCDIR)Game/
+MENUDIR		=	$(SRCDIR)Menu/
+BTNDIR		=	$(SRCDIR)Button/
 UTYDIR		=	$(SRCDIR)Utility/
 INCDIR		=	Include/
 
@@ -18,10 +20,17 @@ SRC		=	$(SRCDIR)Main.cpp \
 			$(SRCDIR)Error.cpp \
 			$(SRCDIR)Board.cpp \
 			$(SRCDIR)SoundBox.cpp \
-			$(GAMDIR)Game.cpp \
-			$(GAMDIR)GameClassic.cpp \
-			$(GAMDIR)GameChallenge.cpp \
-			$(GAMDIR)GameEditor.cpp \
+			$(GAMEDIR)Game.cpp \
+			$(GAMEDIR)GameClassic.cpp \
+			$(GAMEDIR)GameChallenge.cpp \
+			$(GAMEDIR)GameEditor.cpp \
+			$(MENUDIR)Menu.cpp \
+			$(MENUDIR)MainMenu.cpp \
+			$(MENUDIR)MenuClassic.cpp \
+			$(MENUDIR)MenuChallenge.cpp \
+			$(BTNDIR)Button.cpp \
+			$(BTNDIR)ButtonText.cpp \
+			$(BTNDIR)ButtonImage.cpp \
 			$(UTYDIR)Globpp.cpp \
 			$(UTYDIR)Split.cpp \
 

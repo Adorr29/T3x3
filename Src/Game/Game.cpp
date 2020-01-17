@@ -20,6 +20,11 @@ Game::Game(RenderWindow &_window)
     swapSound.setPitch(0.5);
 }
 
+bool Game::win() const
+{
+    return board == winBoard;
+}
+
 void Game::pollEvent()
 {
     const Vector2f rectSize(affZone.width / board.getSize().x, affZone.height / board.getSize().y);
@@ -36,11 +41,12 @@ void Game::pollEvent()
                 if (board != winBoard && !swapLock) {
                     const Vector2u boardPosition((event.mouseButton.x - affZone.left) / rectSize.x, (event.mouseButton.y - affZone.top) / rectSize.y);
 
-                    board.swap(boardPosition);
-                    swapSound.play();
-                    swapCallback(boardPosition);
-                    if (board == winBoard)
-                        winSound.play();
+                    if (board.swap(boardPosition)) {
+                        swapSound.play();
+                        swapCallback(boardPosition);
+                        if (win())
+                            winSound.play();
+                    }
                 }
         eventCallback(event);
     }

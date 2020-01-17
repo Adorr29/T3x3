@@ -35,7 +35,7 @@ public:
     void fill(const bool &state = true);
     void generate(const Uint32 &seed = time(nullptr)); // can generate a fill board !!
     void randomSwap(const size_t &nbSwap, const Uint32 &seed = time(nullptr));
-    void swap(const Vector2u &position);
+    bool swap(const Vector2u &position);
     void aff(RenderTarget &window, FloatRect affZone = FloatRect(0, 0, 0, 0)) const;
     void create(const Vector2u &_size);
     void resize(const Vector2i &back, const Vector2i &front);

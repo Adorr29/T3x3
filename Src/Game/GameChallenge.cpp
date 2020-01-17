@@ -46,7 +46,7 @@ void GameChallenge::run()
         window.clear();
         display();
         window.display();
-        if (board == winBoard && winSound.getStatus() == SoundSource::Stopped)
+        if (win() && winSound.getStatus() == SoundSource::Stopped)
             break;
     }
     resizeWindow(originWindowSize);

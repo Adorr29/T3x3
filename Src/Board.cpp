@@ -84,12 +84,18 @@ void Board::fill(const bool &state)
 
 void Board::generate(const Uint32 &seed)
 {
+    bool haveSwap = false;
+
     fill();
     srand(seed);
     for (Uint32 i = 0; i < size.x; i++)
         for (Uint32 j = 0; j < size.y; j++)
-            if (rand() % 2)
+            if (rand() % 2) {
                 swap(Vector2u(i, j));
+                haveSwap = true;
+            }
+    if (!haveSwap)
+        generate(seed + 1);
 }
 
 void Board::randomSwap(const size_t &nbSwap, const Uint32 &seed)
@@ -109,14 +115,17 @@ void Board::randomSwap(const size_t &nbSwap, const Uint32 &seed)
     }
 }
 
-void Board::swap(const Vector2u &position)
+bool Board::swap(const Vector2u &position)
 {
+    if (position.x >= size.x || position.y >= size.y)
+        return false;
     for (const Vector2i &one : swapPattern) {
         const Vector2u toSwap(position.x + one.x, position.y + one.y);
 
         if (toSwap.x < size.x && toSwap.y < size.y)
             tab[toSwap.x][toSwap.y] = !tab[toSwap.x][toSwap.y];
     }
+    return true;
 }
 
 void Board::aff(RenderTarget &window, FloatRect affZone) const

@@ -17,6 +17,7 @@ public:
     Game(RenderWindow &_window);
     virtual ~Game() = default;
     virtual void run() = 0;
+    bool win() const;
 
 protected:
     void pollEvent();

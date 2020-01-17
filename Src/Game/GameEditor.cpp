@@ -20,6 +20,7 @@ GameEditor::GameEditor(RenderWindow &_window)
     swapPattern = CrossSwapPartten;
 
     saveButtonTexture.loadFromFile("Resources/Texture/Save.png");
+    saveButtonTexture.setSmooth(true);
     saveButtonSprite.setTexture(&saveButtonTexture);
     saveButtonSprite.setSize(Vector2f(originWindowSize) / (float)5.0);
     saveButtonSprite.setPosition(originWindowSize.x, 0);
@@ -62,6 +63,7 @@ void GameEditor::createResizeTexture(RenderTexture &renderTexture, const bool &r
 
     renderTexture.create(originWindowSize.x / 5, originWindowSize.y / 5);
     texture.loadFromFile("Resources/Texture/NegativeArrow.png");
+    texture.setSmooth(true);
     sprite.setTexture(&texture);
     sprite.setSize(Vector2f(renderTexture.getSize()) / (float)3.0);
     sprite.setOrigin(sprite.getSize() / (float)2.0);

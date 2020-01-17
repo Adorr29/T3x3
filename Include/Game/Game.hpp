@@ -32,6 +32,7 @@ protected:
     Board winBoard;
     FloatRect affZone;
     Sound winSound;
+    Sound swapSound;
     function<void(const Vector2u&)> swapCallback;
     function<void(const Event&)> eventCallback;
 };

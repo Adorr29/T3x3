@@ -16,6 +16,8 @@ Game::Game(RenderWindow &_window)
     swapCallback = [](const Vector2u&){};
     eventCallback = [](const Event&){};
     winSound = SoundBox::getInstance().getSound("Win");
+    swapSound = SoundBox::getInstance().getSound("Swap");
+    swapSound.setPitch(0.5);
 }
 
 void Game::pollEvent()
@@ -35,6 +37,7 @@ void Game::pollEvent()
                     const Vector2u boardPosition((event.mouseButton.x - affZone.left) / rectSize.x, (event.mouseButton.y - affZone.top) / rectSize.y);
 
                     board.swap(boardPosition);
+                    swapSound.play();
                     swapCallback(boardPosition);
                     if (board == winBoard)
                         winSound.play();

@@ -5,7 +5,6 @@
 ** SoundBox.cpp
 */
 
-#include <iostream> // tmp
 #include "SoundBox.hpp"
 #include "Error.hpp"
 

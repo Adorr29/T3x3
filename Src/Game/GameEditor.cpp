@@ -61,7 +61,7 @@ void GameEditor::createResizeTexture(RenderTexture &renderTexture, const bool &r
     RectangleShape sprite;
 
     renderTexture.create(originWindowSize.x / 5, originWindowSize.y / 5);
-    texture.loadFromFile("Resources/Texture/Arrow.png");
+    texture.loadFromFile("Resources/Texture/NegativeArrow.png");
     sprite.setTexture(&texture);
     sprite.setSize(Vector2f(renderTexture.getSize()) / (float)3.0);
     sprite.setOrigin(sprite.getSize() / (float)2.0);
@@ -160,31 +160,31 @@ void GameEditor::changeColor(Color &color)
     RectangleShape newColorSprite(Vector2f(colorTabSprite.getSize().y, colorTabSprite.getSize().y));
 
     if (colorTabImage.getSize().x == 0) { // if is not create
-        Color tmpColor = Color::Red;
-        array<reference_wrapper<Uint8>, 4> colorOrder = {tmpColor.r, tmpColor.g, tmpColor.b, tmpColor.r};
+        Color newColor = Color::Red;
+        array<reference_wrapper<Uint8>, 4> colorOrder = {newColor.r, newColor.g, newColor.b, newColor.r};
         size_t x = 0;
 
         colorTabImage.create(255 * 6, 256);
         for (size_t i = 0; i < 3; i++) {
             for (size_t j = 0; colorOrder[i + 1] < 255; colorOrder[i + 1]++, j++) {
                 for (size_t k = 0; k < 256; k++) {
-                    Color tmpColor2 = tmpColor;
+                    Color newColor2 = newColor;
 
-                    tmpColor2.r *= k / 255.0;
-                    tmpColor2.g *= k / 255.0;
-                    tmpColor2.b *= k / 255.0;
-                    colorTabImage.setPixel(x, 255 - k, tmpColor2);
+                    newColor2.r *= k / 255.0;
+                    newColor2.g *= k / 255.0;
+                    newColor2.b *= k / 255.0;
+                    colorTabImage.setPixel(x, 255 - k, newColor2);
                 }
                 x++;
             }
             for (size_t j = 0; colorOrder[i] > 0; colorOrder[i]--, j++) {
                 for (size_t k = 0; k < 256; k++) {
-                    Color tmpColor2 = tmpColor;
+                    Color newColor2 = newColor;
 
-                    tmpColor2.r *= k / 255.0;
-                    tmpColor2.g *= k / 255.0;
-                    tmpColor2.b *= k / 255.0;
-                    colorTabImage.setPixel(x, 255 - k, tmpColor2);
+                    newColor2.r *= k / 255.0;
+                    newColor2.g *= k / 255.0;
+                    newColor2.b *= k / 255.0;
+                    colorTabImage.setPixel(x, 255 - k, newColor2);
                 }
                 x++;
             }

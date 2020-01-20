@@ -17,8 +17,12 @@ public:
 
 private:
     void createButtonList();
+    void refershButtonBoard();
     void display() const;
 
 private:
-    //
+    bool exit;
+    vector<string> boardPathList;
+    const Vector2u pageSize;
+    size_t page;
 };

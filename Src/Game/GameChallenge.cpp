@@ -54,7 +54,7 @@ void GameChallenge::run()
 
 void GameChallenge::loadRandomBoard(const string &dirName)
 {
-    const vector<string> fileNameList = globpp(dirName + "/*");
+    const vector<string> fileNameList = globpp(dirName + "/*", true);
 
     if (fileNameList.empty())
         throw ERROR("Directory \"" + dirName + "\" is empty");

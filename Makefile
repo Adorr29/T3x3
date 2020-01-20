@@ -31,6 +31,7 @@ SRC		=	$(SRCDIR)Main.cpp \
 			$(BTNDIR)Button.cpp \
 			$(BTNDIR)ButtonText.cpp \
 			$(BTNDIR)ButtonImage.cpp \
+			$(BTNDIR)ButtonBoard.cpp \
 			$(UTYDIR)Globpp.cpp \
 			$(UTYDIR)Split.cpp \
 

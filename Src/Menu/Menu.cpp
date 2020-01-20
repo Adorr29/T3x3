@@ -34,19 +34,23 @@ Menu::~Menu()
 
 void Menu::displayButton() const
 {
-    for (const auto &buttonPair : buttonMap)
-        buttonPair.second->aff(window);
+    for (const auto &buttonPair : buttonMap) {
+        const Button &button = *buttonPair.second;
+
+        if (button.isVisible())
+            button.aff(window);
+    }
 }
 
 void Menu::hoverButton(const Vector2f &mousePos)
 {
     for (auto &buttonPair : buttonMap) {
-        ButtonPtr &button = buttonPair.second;
+        Button &button = *buttonPair.second;
 
-        if (button->contains(mousePos))
-            button->setColor(buttonColor[1]);
+        if (button.contains(mousePos))
+            button.setColor(buttonColor[1]);
         else
-            button->setColor(buttonColor[0]);
+            button.setColor(buttonColor[0]);
     }
 }
 

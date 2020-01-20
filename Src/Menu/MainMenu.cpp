@@ -10,7 +10,6 @@
 #include "Menu/MenuChallenge.hpp"
 #include "Game/GameEditor.hpp"
 #include "Button/ButtonText.hpp"
-#include "Game/GameChallenge.hpp" // tmp
 
 MainMenu::MainMenu(RenderWindow &_window)
     : Menu(_window)
@@ -25,7 +24,7 @@ MainMenu::MainMenu(RenderWindow &_window)
     title.setFillColor(buttonColor[0]);
     createButtonList();
     menuMap["Classic"] = make_unique<MenuClassic>(_window);
-    //menuMap["Challenge"] = make_unique<MenuChallenge>(_window)); // TODO
+    menuMap["Challenge"] = make_unique<MenuChallenge>(_window);
 }
 
 void MainMenu::run()
@@ -43,19 +42,14 @@ void MainMenu::run()
 
                     if (button->contains(mousePos)) {
                         buttonSound.play();
-                        unique_ptr<Game> game; // tmp
-
-                        // TODO add sub menu
                         if (buttonName == "Classic")
                             menuMap["Classic"]->run();
                         else if (buttonName == "Challenge")
-                            game = make_unique<GameChallenge>(window, 3);
+                            menuMap["Challenge"]->run();
                         else if (buttonName == "Editor")
                             GameEditor(window).run();
                         else if (buttonName == "Exit")
                             window.close();
-                        if (game)
-                            game->run();
                         hoverButton(Vector2f(0, 0));
                     }
                 }

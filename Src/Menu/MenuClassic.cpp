@@ -83,7 +83,6 @@ void MenuClassic::createButtonList()
     auto buttonBack = make_unique<ButtonImage>();
     buttonBack->setPosition(Vector2f(50, 50));
     buttonBack->setSize(Vector2f(50, 50));
-    //buttonBack->setThickness(5); // ?
     buttonBack->setImage("Resources/Texture/Back.png");
     buttonBack->setColor(buttonColor[0]);
     buttonMap["Back"] = move(buttonBack);

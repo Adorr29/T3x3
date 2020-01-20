@@ -8,9 +8,15 @@
 #include "Button/Button.hpp"
 
 Button::Button()
+    : visible(true)
 {
     rectangle.setFillColor(Color::Transparent);
     rectangle.setOutlineThickness(10);
+}
+
+const bool &Button::isVisible() const
+{
+    return visible;
 }
 
 void Button::setPosition(const Vector2f &position)
@@ -57,4 +63,14 @@ bool Button::contains(const Vector2f &point) const
     if (point.y >= bounds.top + bounds.height)
         return false;
     return true;
+}
+
+void Button::hide()
+{
+    visible = false;
+}
+
+void Button::show()
+{
+    visible = true;
 }

@@ -12,6 +12,4 @@
 
 using namespace std;
 
-vector<string> globpp(const string &pattern);
-
-
+vector<string> globpp(const string &pattern, const bool &recursive = false);

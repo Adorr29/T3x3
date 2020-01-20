@@ -9,8 +9,6 @@
 
 #include "Button.hpp"
 
-//using namespace std; // TODO supr
-
 class ButtonText : public Button
 {
 public:

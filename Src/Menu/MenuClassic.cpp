@@ -43,13 +43,11 @@ void MenuClassic::run()
                             GameClassic(window, boardSize).run();
                         else if (buttonName == "SizeUp") {
                             boardSize++;
-                            static_cast<ButtonText&>(*buttonMap["BoardSize"]).setString(to_string(boardSize));
-                            //
+                            refreshButtonBoardSize();
                         }
                         else if (buttonName == "SizeDown" && boardSize > 1) {
                             boardSize--;
-                            static_cast<ButtonText&>(*buttonMap["BoardSize"]).setString(to_string(boardSize));
-                            //
+                            refreshButtonBoardSize();
                         }
                         else if (buttonName == "Infinite")
                             while (true) {
@@ -57,7 +55,7 @@ void MenuClassic::run()
 
                                 game.run();
                                 if (!game.win()) {
-                                    static_cast<ButtonText&>(*buttonMap["BoardSize"]).setString(to_string(boardSize));
+                                    refreshButtonBoardSize();
                                     break;
                                 }
                                 boardSize++;
@@ -69,6 +67,11 @@ void MenuClassic::run()
             else if (event.type == Event::MouseMoved) {
                 hoverButton(Vector2f(event.mouseMove.x, event.mouseMove.y));
                 buttonMap["BoardSize"]->setColor(buttonColor[0]);
+            }
+            else if (event.type == Event::MouseButtonReleased) {
+                hoverButton(Vector2f(event.mouseButton.x, event.mouseButton.y));
+                buttonMap["BoardSize"]->setColor(buttonColor[0]);
+
             }
         }
         updateBackground();
@@ -125,6 +128,11 @@ void MenuClassic::createButtonList()
     buttonInfinite->setImage("Resources/Texture/Infinite.png");
     buttonInfinite->setColor(buttonColor[0]);
     buttonMap["Infinite"] = move(buttonInfinite);
+}
+
+void MenuClassic::refreshButtonBoardSize()
+{
+    static_cast<ButtonText&>(*buttonMap["BoardSize"]).setString(to_string(boardSize));
 }
 
 void MenuClassic::display() const

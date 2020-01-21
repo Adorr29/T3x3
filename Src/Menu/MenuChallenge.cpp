@@ -13,14 +13,16 @@
 MenuChallenge::MenuChallenge(RenderWindow &_window)
     : Menu(_window),
       pageSize(3, 3),
-      page(0)
+      page(0),
+      menuNbSwap(_window)
 {
-    boardPathList = globpp("Resources/Board/*", true);
     createButtonList();
 }
 
 void MenuChallenge::run()
 {
+    boardPathList = globpp("Resources/Board/*", true);
+    refershButtonBoard();
     exit = false;
     while (window.isOpen() && !exit) {
         for (Event event; window.pollEvent(event);) {
@@ -43,6 +45,33 @@ void MenuChallenge::run()
                             exit = true;
                         else if (buttonName == "Random")
                             GameChallenge(window, rand() % 3 + 2).run();
+                        else if (buttonName == "Infinite") {
+                            const size_t sizeMin = 4;
+                            const size_t sizeMax = 6;
+                            const size_t nbGameByStep = 3;
+                            size_t nbGame = 0;
+                            size_t size = 4;
+                            size_t swap = 1;
+
+                            while (true) {
+                                string nbStr = to_string(size);
+                                string fileName = "Resources/Board/" + nbStr + "x" + nbStr + "/";
+                                GameChallenge game(window, swap, fileName);
+
+                                game.run();
+                                if (!game.win())
+                                    break;
+                                nbGame++;
+                                if (nbGame > nbGameByStep) {
+                                    nbGame = 0;
+                                    size++;
+                                    if (size > sizeMax) {
+                                        size = sizeMin;
+                                        swap++;
+                                    }
+                                }
+                            }
+                        }
                         else if (buttonName == "PrevPage") {
                             if (page > 0) {
                                 page--;
@@ -62,8 +91,8 @@ void MenuChallenge::run()
                         else if (buttonName.find("Board") == 0) {
                             const ButtonBoard &buttonBoard = static_cast<ButtonBoard&>(*button);
 
-                            // TODO sub menu
-                            GameChallenge(window, 3, buttonBoard.getBoardPath()).run();
+                            menuNbSwap.setBoardPath(buttonBoard.getBoardPath());
+                            menuNbSwap.run();
                         }
                         hoverButton(Vector2f(0, 0)); // for reset button color
                     }
@@ -91,11 +120,18 @@ void MenuChallenge::createButtonList()
     buttonMap["Back"] = move(buttonBack);
 
     auto buttonRandom = make_unique<ButtonImage>();
-    buttonRandom->setPosition(Vector2f(50, 150));
+    buttonRandom->setPosition(Vector2f(250, 50));
     buttonRandom->setSize(Vector2f(50, 50));
     buttonRandom->setImage("Resources/Texture/Dice.png");
     buttonRandom->setColor(buttonColor[0]);
     buttonMap["Random"] = move(buttonRandom);
+
+    auto buttonInfinite = make_unique<ButtonImage>();
+    buttonInfinite->setPosition(Vector2f(350, 50));
+    buttonInfinite->setSize(Vector2f(50, 50));
+    buttonInfinite->setImage("Resources/Texture/Infinite.png");
+    buttonInfinite->setColor(buttonColor[0]);
+    buttonMap["Infinite"] = move(buttonInfinite);
 
     auto buttonPrevPage = make_unique<ButtonImage>();
     buttonPrevPage->setPosition(Vector2f(35, window.getSize().y / 2.0));
@@ -122,7 +158,6 @@ void MenuChallenge::createButtonList()
             buttonBoard->setColor(buttonColor[0]);
             buttonMap["Board" + to_string(i) + "_" + to_string(j)] = move(buttonBoard);
         }
-    refershButtonBoard();
 }
 
 void MenuChallenge::refershButtonBoard()

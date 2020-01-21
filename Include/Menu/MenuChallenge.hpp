@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Menu/Menu.hpp"
+#include "Menu/MenuNbSwap.hpp"
 
 class MenuChallenge : public Menu
 {
@@ -25,4 +26,5 @@ private:
     vector<string> boardPathList;
     const Vector2u pageSize;
     size_t page;
+    MenuNbSwap menuNbSwap;
 };

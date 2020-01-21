@@ -17,6 +17,7 @@ public:
 
 private:
     void createButtonList();
+    void refreshButtonBoardSize();
     void display() const;
 
 private:

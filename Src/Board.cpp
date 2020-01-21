@@ -40,9 +40,7 @@ Board::Board(const Board &board)
 
 Board::~Board()
 {
-    for (Uint32 i = 0; i < size.x; i++)
-        delete [] tab[i];
-    delete [] tab;
+    destroy();
 }
 
 const Vector2u &Board::getSize() const
@@ -169,10 +167,7 @@ void Board::resize(const Vector2i &back, const Vector2i &front)
     for (Uint32 i = max(0, -back.x); i < min(size.x, size.x + front.x); i++)
         for (Uint32 j = max(0, -back.y); j < min(size.y, size.y + front.y); j++)
             newTab[i + back.x][j + back.y] = tab[i][j];
-    for (Uint32 i = 0; i < size.x; i++)
-        delete [] tab[i];
-    delete [] tab;
-    tab = newTab;
+    destroy();
     size = newSize;
 }
 
@@ -268,4 +263,12 @@ bool Board::operator==(const Board &other) const
 bool Board::operator!=(const Board &other) const
 {
     return !operator==(other);
+}
+
+void Board::destroy()
+{
+    for (Uint32 i = 0; i < size.x; i++)
+        delete [] tab[i];
+    if (size.x > 0)
+        delete [] tab;
 }

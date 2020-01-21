@@ -33,7 +33,7 @@ public:
     void setColor(const array<Color, 2> &_color);
     void setSwapPattern(const SwapPattern &_swapPattern);
     void fill(const bool &state = true);
-    void generate(const Uint32 &seed = time(nullptr)); // can generate a fill board !!
+    void generate(const Uint32 &seed = time(nullptr));
     void randomSwap(const size_t &nbSwap, const Uint32 &seed = time(nullptr));
     bool swap(const Vector2u &position);
     void aff(RenderTarget &window, FloatRect affZone = FloatRect(0, 0, 0, 0)) const;
@@ -44,6 +44,9 @@ public:
     void operator=(const Board &other);
     bool operator==(const Board &other) const;
     bool operator!=(const Board &other) const;
+
+private:
+    void destroy();
 
 private:
     Vector2u size;

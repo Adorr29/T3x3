@@ -5,7 +5,6 @@
 ** Main.cpp
 */
 
-#include <iostream> // tmp ?
 #include "Menu/MainMenu.hpp"
 
 int main()

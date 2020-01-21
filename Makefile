@@ -28,6 +28,7 @@ SRC		=	$(SRCDIR)Main.cpp \
 			$(MENUDIR)MainMenu.cpp \
 			$(MENUDIR)MenuClassic.cpp \
 			$(MENUDIR)MenuChallenge.cpp \
+			$(MENUDIR)MenuNbSwap.cpp \
 			$(BTNDIR)Button.cpp \
 			$(BTNDIR)ButtonText.cpp \
 			$(BTNDIR)ButtonImage.cpp \

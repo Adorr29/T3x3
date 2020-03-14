@@ -169,6 +169,7 @@ void Board::resize(const Vector2i &back, const Vector2i &front)
             newTab[i + back.x][j + back.y] = tab[i][j];
     destroy();
     size = newSize;
+    tab = newTab;
 }
 
 bool Board::save(const string &fileName) const

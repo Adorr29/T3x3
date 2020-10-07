@@ -39,23 +39,23 @@ void MenuChallenge::run()
                     const string &buttonName = buttonPair.first;
                     const ButtonPtr &button = buttonPair.second;
 
-                    if (button->contains(mousePos)) {
+                    if (button->isVisible() && button->contains(mousePos)) {
                         buttonSound.play();
                         if (buttonName == "Back")
                             exit = true;
                         else if (buttonName == "Random")
-                            GameChallenge(window, rand() % 3 + 2).run();
+                            GameChallenge(window, rand() % 4 + 1).run();
                         else if (buttonName == "Infinite") {
                             const size_t sizeMin = 4;
                             const size_t sizeMax = 6;
-                            const size_t nbGameByStep = 3;
+                            const size_t nbGameByStep = 2;
                             size_t nbGame = 0;
-                            size_t size = 4;
+                            size_t size = sizeMin;
                             size_t swap = 1;
 
                             while (true) {
-                                string nbStr = to_string(size);
-                                string fileName = "Resources/Board/" + nbStr + "x" + nbStr + "/";
+                                string sizeStr = to_string(size);
+                                string fileName = "Resources/Board/" + sizeStr + "x" + sizeStr + "/";
                                 GameChallenge game(window, swap, fileName);
 
                                 game.run();

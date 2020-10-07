@@ -62,7 +62,7 @@ void MenuChallenge::run()
                                 if (!game.win())
                                     break;
                                 nbGame++;
-                                if (nbGame > nbGameByStep) {
+                                if (nbGame >= nbGameByStep) {
                                     nbGame = 0;
                                     size++;
                                     if (size > sizeMax) {
